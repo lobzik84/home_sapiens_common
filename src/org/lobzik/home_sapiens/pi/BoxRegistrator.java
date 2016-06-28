@@ -8,6 +8,7 @@ package org.lobzik.home_sapiens.pi;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.URL;
@@ -59,6 +60,8 @@ public class BoxRegistrator {
             URLConnection conn = url.openConnection();
             conn.setDoInput(true);
             conn.setDoOutput(true);
+            //conn.setRequestProperty("User-Agent","Mozilla/5.0 ( compatible ) ");
+            //conn.setRequestProperty("Accept","*/*");
             OutputStreamWriter out = new OutputStreamWriter(conn.getOutputStream());
             out.write(reqJson.toString());
             out.close();
@@ -72,9 +75,15 @@ public class BoxRegistrator {
             in.close();
             JSONObject response = new JSONObject(sb.toString());
             if (response.has("register_result") && response.getString("register_result").equals("success")) {
-                //TODO write box.id
+
                 id = response.getInt("box_id");
-                
+                FileOutputStream fos = new FileOutputStream(boxIdFile);
+                OutputStreamWriter idFileOs = new OutputStreamWriter(fos);
+                idFileOs.write("box_id=" + id + "\n");
+                idFileOs.flush();
+                idFileOs.close();
+                fos.flush();
+                fos.close();
                 System.out.println("Box registered successfully");
                 System.out.println("Box ID: " + id);
                 System.out.println("Box SSID: " + ssid);
@@ -85,14 +94,11 @@ public class BoxRegistrator {
                 System.err.println("Error while registering device ");
                 System.err.println(sb.toString());
             }
+            //boxIdFile.
         } catch (Throwable e) {
             System.err.println("Error while registering device ");
             e.printStackTrace();
         }
     }
 
-    /*private static int readIdFromFile() throws Exception {
-     int box
-     return 0;
-     }*/
 }
