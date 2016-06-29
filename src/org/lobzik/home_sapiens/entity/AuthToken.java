@@ -16,8 +16,9 @@ public class AuthToken {
     private String key = null;
     private static final long TTL = 15 * 60 * 1000L;
     private static final String keyAlphabet = "1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
-    public AuthToken() {
+    private int boxId = 0;
+    
+    public AuthToken(int boxId) {
        accessTime = System.currentTimeMillis();
        key = generateKey();
     }
@@ -30,8 +31,17 @@ public class AuthToken {
         return key;
     }
     
-    public void refresh() {
+    public int getBoxId() {
+        return boxId;
+    }
+    
+    public int refresh() {
         accessTime = System.currentTimeMillis();
+        return boxId;
+    }
+    
+    public long getVaildTo() {
+        return accessTime + TTL;
     }
 
     private static String generateKey() {

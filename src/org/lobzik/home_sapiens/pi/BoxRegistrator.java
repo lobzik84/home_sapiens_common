@@ -41,7 +41,7 @@ public class BoxRegistrator {
             Properties hostapdConf = new Properties();
             hostapdConf.load(new FileInputStream(CommonData.HOSTAPD_CONFIG_FILE));
             String ssid = hostapdConf.getProperty("ssid");
-            String wpa_key = hostapdConf.getProperty("wpa_passphrase");
+            String wpa_psk = hostapdConf.getProperty("wpa_passphrase");
             String publicKey = new String(Files.readAllBytes(Paths.get(CommonData.PUBLIC_KEY_FILE)), "UTF-8");
             int id = 0;
 
@@ -49,7 +49,7 @@ public class BoxRegistrator {
             boxJson.put("ssid", ssid);
             boxJson.put("public_key", publicKey);
             boxJson.put("version", CommonData.BOX_VERSION);
-            boxJson.put("wpa_psk", wpa_key);
+            boxJson.put("wpa_psk", wpa_psk);
 
             JSONObject reqJson = new JSONObject();
             reqJson.put("action", "register_request");
@@ -60,8 +60,6 @@ public class BoxRegistrator {
             URLConnection conn = url.openConnection();
             conn.setDoInput(true);
             conn.setDoOutput(true);
-            //conn.setRequestProperty("User-Agent","Mozilla/5.0 ( compatible ) ");
-            //conn.setRequestProperty("Accept","*/*");
             OutputStreamWriter out = new OutputStreamWriter(conn.getOutputStream());
             out.write(reqJson.toString());
             out.close();
@@ -87,7 +85,7 @@ public class BoxRegistrator {
                 System.out.println("Box registered successfully");
                 System.out.println("Box ID: " + id);
                 System.out.println("Box SSID: " + ssid);
-                System.out.println("Box WPA_PSK: " + wpa_key); //print on a sticker
+                System.out.println("Box WPA_PSK: " + wpa_psk); //print on a sticker
                 System.out.println("Box RSA public key: " + publicKey);
                 System.out.println("Box registration done");
             } else {
