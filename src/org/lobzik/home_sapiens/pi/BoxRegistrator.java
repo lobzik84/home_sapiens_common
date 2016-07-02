@@ -7,15 +7,11 @@ package org.lobzik.home_sapiens.pi;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.URL;
 import java.net.URLConnection;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.Properties;
 import org.json.JSONObject;
 
 /**
@@ -30,32 +26,23 @@ public class BoxRegistrator {
     public static void main(String[] args) {
         // TODO code application logic here
         try {
-            File boxIdFile = new File(CommonData.BOX_ID_FILE);
-            if (boxIdFile.exists()) {
+
+            if (CommonData.BOX_ID > 0) {
                 System.err.println("Box registered already, " + CommonData.BOX_ID_FILE + " exists. Exiting.");
                 return;
             }
-            //TODO option for forced registration with rewrite
-
-            //String hostapdConf = new String(Files.readAllBytes(Paths.get(CommonData.HOSTAPD_CONFIG_FILE)), "UTF-8");
-            Properties hostapdConf = new Properties();
-            hostapdConf.load(new FileInputStream(CommonData.HOSTAPD_CONFIG_FILE));
-            String ssid = hostapdConf.getProperty("ssid");
-            String wpa_psk = hostapdConf.getProperty("wpa_passphrase");
-            String publicKey = new String(Files.readAllBytes(Paths.get(CommonData.PUBLIC_KEY_FILE)), "UTF-8");
-            int id = 0;
 
             JSONObject boxJson = new JSONObject();
-            boxJson.put("ssid", ssid);
-            boxJson.put("public_key", publicKey);
+            boxJson.put("ssid", CommonData.SSID);
+            boxJson.put("public_key", CommonData.PUBLIC_KEY);
             boxJson.put("version", CommonData.BOX_VERSION);
-            boxJson.put("wpa_psk", wpa_psk);
+            boxJson.put("wpa_psk", CommonData.WPA_PSK);
 
             JSONObject reqJson = new JSONObject();
             reqJson.put("action", "register_request");
             reqJson.put("box_data", boxJson);
 
-            URL url = new URL(CommonData.TUNNEL_SERVER_URL);
+            URL url = new URL(CommonData.REGISTER_SERVER_URL);
 
             URLConnection conn = url.openConnection();
             conn.setDoInput(true);
@@ -74,7 +61,8 @@ public class BoxRegistrator {
             JSONObject response = new JSONObject(sb.toString());
             if (response.has("register_result") && response.getString("register_result").equals("success")) {
 
-                id = response.getInt("box_id");
+                int id = response.getInt("box_id");
+                File boxIdFile = new File(CommonData.BOX_ID_FILE);
                 FileOutputStream fos = new FileOutputStream(boxIdFile);
                 OutputStreamWriter idFileOs = new OutputStreamWriter(fos);
                 idFileOs.write("box_id=" + id + "\n");
@@ -84,9 +72,9 @@ public class BoxRegistrator {
                 fos.close();
                 System.out.println("Box registered successfully");
                 System.out.println("Box ID: " + id);
-                System.out.println("Box SSID: " + ssid);
-                System.out.println("Box WPA_PSK: " + wpa_psk); //print on a sticker
-                System.out.println("Box RSA public key: " + publicKey);
+                System.out.println("Box SSID: " + CommonData.SSID);
+                System.out.println("Box WPA_PSK: " + CommonData.WPA_PSK); //print on a sticker
+                System.out.println("Box RSA public key: " + CommonData.PUBLIC_KEY);
                 System.out.println("Box registration done");
             } else {
                 System.err.println("Error while registering device ");
