@@ -14,10 +14,10 @@ import java.util.Properties;
 import org.lobzik.tools.Tools;
 
 /**
- *
+ * DO NOT USE THIS CLASS ON SERVER PACKAGE!
  * @author lobzik
  */
-public class CommonData {
+public class BoxCommonData {
 
     public static final String BOX_PROPERTIES_FILE = "/etc/box.properties";
     public static final Integer BOX_ID;
@@ -32,7 +32,7 @@ public class CommonData {
     public static final String WPA_PSK;
     public static final String PUBLIC_KEY;
 
-    private CommonData() {
+    private BoxCommonData() {
     }
 
     static { //Init from files
@@ -40,7 +40,7 @@ public class CommonData {
         try {
 
             Properties props = new Properties();
-            props.load(new FileInputStream(CommonData.BOX_PROPERTIES_FILE));
+            props.load(new FileInputStream(BoxCommonData.BOX_PROPERTIES_FILE));
             settingsMap.put("PRIVATE_KEY_FILE", props.getProperty("private_key_file"));
             settingsMap.put("TUNNEL_SERVER_URL", props.getProperty("tunnel_server_url"));
             settingsMap.put("REGISTER_SERVER_URL", props.getProperty("register_server_url"));
@@ -62,7 +62,7 @@ public class CommonData {
 
             if (boxIdFile.exists()) {
                 props = new Properties();
-                props.load(new FileInputStream(CommonData.BOX_ID_FILE));
+                props.load(new FileInputStream(BoxCommonData.BOX_ID_FILE));
                 settingsMap.put("BOX_ID", props.getProperty("box_id"));
             }
 

@@ -27,22 +27,22 @@ public class BoxRegistrator {
         // TODO code application logic here
         try {
 
-            if (CommonData.BOX_ID > 0) {
-                System.err.println("Box registered already, " + CommonData.BOX_ID_FILE + " exists. Exiting.");
+            if (BoxCommonData.BOX_ID > 0) {
+                System.err.println("Box registered already, " + BoxCommonData.BOX_ID_FILE + " exists. Exiting.");
                 return;
             }
 
             JSONObject boxJson = new JSONObject();
-            boxJson.put("ssid", CommonData.SSID);
-            boxJson.put("public_key", CommonData.PUBLIC_KEY);
-            boxJson.put("version", CommonData.BOX_VERSION);
-            boxJson.put("wpa_psk", CommonData.WPA_PSK);
+            boxJson.put("ssid", BoxCommonData.SSID);
+            boxJson.put("public_key", BoxCommonData.PUBLIC_KEY);
+            boxJson.put("version", BoxCommonData.BOX_VERSION);
+            boxJson.put("wpa_psk", BoxCommonData.WPA_PSK);
 
             JSONObject reqJson = new JSONObject();
             reqJson.put("action", "register_request");
             reqJson.put("box_data", boxJson);
 
-            URL url = new URL(CommonData.REGISTER_SERVER_URL);
+            URL url = new URL(BoxCommonData.REGISTER_SERVER_URL);
 
             URLConnection conn = url.openConnection();
             conn.setDoInput(true);
@@ -62,7 +62,7 @@ public class BoxRegistrator {
             if (response.has("register_result") && response.getString("register_result").equals("success")) {
 
                 int id = response.getInt("box_id");
-                File boxIdFile = new File(CommonData.BOX_ID_FILE);
+                File boxIdFile = new File(BoxCommonData.BOX_ID_FILE);
                 FileOutputStream fos = new FileOutputStream(boxIdFile);
                 OutputStreamWriter idFileOs = new OutputStreamWriter(fos);
                 idFileOs.write("box_id=" + id + "\n");
@@ -72,9 +72,9 @@ public class BoxRegistrator {
                 fos.close();
                 System.out.println("Box registered successfully");
                 System.out.println("Box ID: " + id);
-                System.out.println("Box SSID: " + CommonData.SSID);
-                System.out.println("Box WPA_PSK: " + CommonData.WPA_PSK); //print on a sticker
-                System.out.println("Box RSA public key: " + CommonData.PUBLIC_KEY);
+                System.out.println("Box SSID: " + BoxCommonData.SSID);
+                System.out.println("Box WPA_PSK: " + BoxCommonData.WPA_PSK); //print on a sticker
+                System.out.println("Box RSA public key: " + BoxCommonData.PUBLIC_KEY);
                 System.out.println("Box registration done");
             } else {
                 System.err.println("Error while registering device ");
