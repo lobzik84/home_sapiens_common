@@ -62,7 +62,7 @@ public class BoxCommonData {
 
             if (boxIdFile.exists()) {
                 props = new Properties();
-                props.load(new FileInputStream(BoxCommonData.BOX_ID_FILE));
+                props.load(new FileInputStream(boxIdFileName));
                 settingsMap.put("BOX_ID", props.getProperty("box_id"));
             }
 
