@@ -19,6 +19,8 @@ import org.lobzik.tools.Tools;
  */
 public class BoxCommonData {
 
+    public static final String dataSourceName = "jdbc/hs";
+    
     public static final String BOX_PROPERTIES_FILE = "/etc/box.properties";
     public static final Integer BOX_ID;
     public static final String BOX_VERSION;
