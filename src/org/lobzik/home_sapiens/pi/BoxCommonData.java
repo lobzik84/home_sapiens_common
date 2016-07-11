@@ -33,7 +33,8 @@ public class BoxCommonData {
     public static final String SSID;
     public static final String WPA_PSK;
     public static final String PUBLIC_KEY;
-
+    public static final String SERIAL_PORT;
+    
     private BoxCommonData() {
     }
 
@@ -43,6 +44,7 @@ public class BoxCommonData {
 
             Properties props = new Properties();
             props.load(new FileInputStream(BoxCommonData.BOX_PROPERTIES_FILE));
+            settingsMap.put("SERIAL_PORT", props.getProperty("serial_port"));
             settingsMap.put("PRIVATE_KEY_FILE", props.getProperty("private_key_file"));
             settingsMap.put("TUNNEL_SERVER_URL", props.getProperty("tunnel_server_url"));
             settingsMap.put("REGISTER_SERVER_URL", props.getProperty("register_server_url"));
@@ -86,6 +88,7 @@ public class BoxCommonData {
         SSID = settingsMap.get("SSID");
         WPA_PSK = settingsMap.get("WPA_PSK");
         PUBLIC_KEY = settingsMap.get("PUBLIC_KEY");
+        SERIAL_PORT = settingsMap.get("SERIAL_PORT");
 
     }
 }
