@@ -13,10 +13,10 @@ import org.lobzik.tools.Tools;
  * @author lobzik
  */
 public class Measurement {
-    private int intValue;
-    private double doubleValue;
-    private String stringValue;
-    private long time;
+    private final int intValue;
+    private final double doubleValue;
+    private final String stringValue;
+    private final long time;
     
     public Measurement(String value) {
         this.time = System.currentTimeMillis();
@@ -41,6 +41,7 @@ public class Measurement {
         return intValue;
     }
     
+    @Override
     public String toString() {
         String dateStr = Tools.getFormatedDate(new Date(time), "yyyy.MM.dd HH:mm:ss");
         return dateStr + " : " + stringValue;
