@@ -25,6 +25,13 @@ public class Measurement {
         this.doubleValue = Tools.parseDouble(stringValue, 0);
     }
     
+    public Measurement(Double value, long time) {
+        this.time = time;
+        this.doubleValue = value;
+        this.stringValue = value + "";
+        this.intValue = Tools.parseInt(stringValue, 0);
+    }
+    
     public long getTime() {
         return time;
     }

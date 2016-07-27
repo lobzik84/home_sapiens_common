@@ -15,46 +15,17 @@ public class Parameter {
     private int id = 0;
     private String name = null;
     private String alias = null;
-    private Measurement measurement = null;
-    private Measurement prevMeasurement = null;
     private String description = null;
     private String pattern = null;
     private String unit = null;
-    private Object data = null;
 
-    public Parameter(int idP, String nameP, String aliasP, Measurement measurementP, String descriptionP, String patternP, String unitP) {
+    public Parameter(int idP, String nameP, String aliasP, String descriptionP, String patternP, String unitP) {
         id = idP;
         name = nameP;
         alias = aliasP;
-        measurement = measurementP;
         description = descriptionP;
         pattern = patternP;
         unit = unitP;
-    }
-
-    public void setData(Object dataP) {
-        data = dataP;
-    }
-
-    public void set(Measurement measurementP) {
-        prevMeasurement = measurement;
-        measurement = measurementP;
-    }
-
-    public Measurement get() {
-        return measurement;
-    }
-/*
-    public String getF() {
-        return Formatter.format(value, false);
-    }
-
-    public String getFU() {
-        return Formatter.format(this, true);
-    }
-*/
-    public Measurement getPrevious() {
-        return prevMeasurement;
     }
 
     public String getName() {
@@ -81,7 +52,4 @@ public class Parameter {
         return id;
     }
 
-    public Object getData() {
-        return data;
-    }
 }
