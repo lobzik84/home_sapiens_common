@@ -18,14 +18,23 @@ public class Parameter {
     private String description = null;
     private String pattern = null;
     private String unit = null;
+    private Type type; 
+    
+    public enum Type
+    {   
+        ANALOG,  //1
+        BOOLEAN, //2
+        COUNTER  //3
+    };
 
-    public Parameter(int idP, String nameP, String aliasP, String descriptionP, String patternP, String unitP) {
+    public Parameter(int idP, String nameP, String aliasP, String descriptionP, String patternP, String unitP, Parameter.Type typeP) {
         id = idP;
         name = nameP;
         alias = aliasP;
         description = descriptionP;
         pattern = patternP;
         unit = unitP;
+        type = typeP;
     }
 
     public String getName() {
@@ -52,4 +61,7 @@ public class Parameter {
         return id;
     }
 
+    public Parameter.Type getType() {
+        return type;
+    }
 }
