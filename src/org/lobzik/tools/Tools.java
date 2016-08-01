@@ -85,6 +85,14 @@ public class Tools {
             return defaultVal;
         }
     }
+    
+    public static Integer parseInt(Object o, Integer defaultVal) {
+        try {
+            return Integer.parseInt(o.toString());
+        } catch (Exception e) {
+            return defaultVal;
+        }
+    }
 
     public static java.util.Date parseDate(String sDateTime, String pattern) {
         try {
@@ -105,6 +113,14 @@ public class Tools {
     }
 
     public static double parseDouble(Object o, double defaultVal) {
+        try {
+            return Double.parseDouble(o.toString());
+        } catch (Exception e) {
+            return defaultVal;
+        }
+    }
+    
+    public static Double parseDouble(Object o, Double defaultVal) {
         try {
             return Double.parseDouble(o.toString());
         } catch (Exception e) {
@@ -311,6 +327,14 @@ public class Tools {
     }
 
     public static boolean parseBoolean(Object o, boolean defaultVal) {
+        try {
+            return Boolean.parseBoolean(o.toString());
+        } catch (Exception e) {
+            return defaultVal;
+        }
+    }
+    
+    public static Boolean parseBoolean(Object o, Boolean defaultVal) {
         try {
             return Boolean.parseBoolean(o.toString());
         } catch (Exception e) {

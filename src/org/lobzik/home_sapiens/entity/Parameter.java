@@ -22,9 +22,11 @@ public class Parameter {
     
     public enum Type
     {   
-        ANALOG,  //1
-        BOOLEAN, //2
-        COUNTER  //3
+        DOUBLE,  
+        STRING,
+        INTEGER,
+        BOOLEAN, 
+        INTEGER_COUNTER //incremental
     };
 
     public Parameter(int idP, String nameP, String aliasP, String descriptionP, String patternP, String unitP, Parameter.Type typeP) {

@@ -13,45 +13,138 @@ import org.lobzik.tools.Tools;
  * @author lobzik
  */
 public class Measurement {
-    private final int intValue;
-    private final double doubleValue;
+
+    private final Double doubleValue;
     private final String stringValue;
+    private final Integer integerValue;
+    private final Boolean booleanValue;
     private final long time;
-    
-    public Measurement(String value) {
+    private final Parameter parameter;
+
+    public Measurement(Parameter p, Double value) {
+        this.time = System.currentTimeMillis();
+        this.stringValue = null;
+        this.integerValue = null;
+        this.doubleValue = value;
+        this.booleanValue = null;
+        this.parameter = p;
+    }
+
+    public Measurement(Parameter p, String value) {
         this.time = System.currentTimeMillis();
         this.stringValue = value;
-        this.intValue = Tools.parseInt(stringValue, 0);
-        this.doubleValue = Tools.parseDouble(stringValue, 0);
+        this.integerValue = null;
+        this.doubleValue = null;
+        this.booleanValue = null;
+        this.parameter = p;
     }
-    
-    public Measurement(Double value, long time) {
+
+    public Measurement(Parameter p, Integer value) {
+        this.time = System.currentTimeMillis();
+        this.stringValue = null;
+        this.integerValue = value;
+        this.doubleValue = null;
+        this.booleanValue = null;
+        this.parameter = p;
+    }
+
+    public Measurement(Parameter p, Boolean value) {
+        this.time = System.currentTimeMillis();
+        this.stringValue = null;
+        this.integerValue = null;
+        this.doubleValue = null;
+        this.booleanValue = value;
+        this.parameter = p;
+    }
+
+    public Measurement(Parameter p, Double value, long time) {
         this.time = time;
+        this.stringValue = null;
+        this.integerValue = null;
         this.doubleValue = value;
-        this.stringValue = value + "";
-        this.intValue = Tools.parseInt(stringValue, 0);
+        this.booleanValue = null;
+        this.parameter = p;
     }
-    
+
+    public Measurement(Parameter p, String value, long time) {
+        this.time = time;
+        this.stringValue = value;
+        this.integerValue = null;
+        this.doubleValue = null;
+        this.booleanValue = null;
+        this.parameter = p;
+    }
+
+    public Measurement(Parameter p, Integer value, long time) {
+        this.time = time;
+        this.stringValue = null;
+        this.integerValue = value;
+        this.doubleValue = null;
+        this.booleanValue = null;
+        this.parameter = p;
+    }
+
+    public Measurement(Parameter p, Boolean value, long time) {
+        this.time = time;
+        this.stringValue = null;
+        this.integerValue = null;
+        this.doubleValue = null;
+        this.booleanValue = value;
+        this.parameter = p;
+    }
+
     public long getTime() {
         return time;
     }
-    
+
     public String getStringValue() {
         return stringValue;
     }
-    
-    public double getDoubleValue() {
+
+    public Double getDoubleValue() {
         return doubleValue;
     }
-    
-    public int getIntValue() {
-        return intValue;
+
+    public Integer getIntegerValue() {
+        return integerValue;
     }
-    
+
+    public Boolean getBooleanValue() {
+        return booleanValue;
+    }
+
+    public Parameter getParameter() {
+        return parameter;
+    }
+
+    public String toStringValue() {
+        String value = null;
+        switch (parameter.getType()) {
+            case BOOLEAN:
+                value = booleanValue + "";
+                break;
+
+            case INTEGER:
+                value = integerValue + "";
+                break;
+
+            case DOUBLE:
+                value = doubleValue + ""; //TODO format according to pattern
+                break;
+
+            case STRING:
+                value = stringValue;
+                break;
+
+        }
+
+        return value;
+    }
+
     @Override
     public String toString() {
         String dateStr = Tools.getFormatedDate(new Date(time), "yyyy.MM.dd HH:mm:ss");
-        return dateStr + " : " + stringValue;
+        return dateStr + " : " + toStringValue();
     }
-            
+
 }
