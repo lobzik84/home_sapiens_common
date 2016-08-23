@@ -19,6 +19,7 @@ public class Parameter {
     private String pattern = null;
     private String unit = null;
     private Type type; 
+    private Double calibration = null;
     
     public enum Type
     {   
@@ -29,7 +30,7 @@ public class Parameter {
         INTEGER_COUNTER //incremental
     };
 
-    public Parameter(int idP, String nameP, String aliasP, String descriptionP, String patternP, String unitP, Parameter.Type typeP) {
+    public Parameter(int idP, String nameP, String aliasP, String descriptionP, String patternP, String unitP, Parameter.Type typeP, Double calibrationP) {
         id = idP;
         name = nameP;
         alias = aliasP;
@@ -37,6 +38,7 @@ public class Parameter {
         pattern = patternP;
         unit = unitP;
         type = typeP;
+        calibration = calibrationP;
     }
 
     public String getName() {
@@ -62,6 +64,11 @@ public class Parameter {
     public int getId() {
         return id;
     }
+    
+    public Double getCalibration() {
+        return calibration;
+    }
+
 
     public Parameter.Type getType() {
         return type;

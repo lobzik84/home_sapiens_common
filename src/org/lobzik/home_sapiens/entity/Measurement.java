@@ -129,7 +129,11 @@ public class Measurement {
                 break;
 
             case DOUBLE:
-                value = doubleValue + ""; //TODO format according to pattern
+                if (parameter.getCalibration() != null) {
+                    value = parameter.getCalibration() * doubleValue + ""; //TODO format according to pattern
+                } else {
+                    value = doubleValue + ""; //TODO format according to pattern
+                }
                 break;
 
             case STRING:
