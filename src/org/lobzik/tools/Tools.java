@@ -24,6 +24,7 @@ import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.ImageIcon;
+import javax.xml.bind.DatatypeConverter;
 
 /**
  *
@@ -43,13 +44,14 @@ public class Tools {
         "tt", "ul", "u"
     };
 
-    /**
-     * Âîçâðàùàåò "÷åëîâå÷åñêîå" ïðåäñòàâëåíèå îáúžìà äàííûõ. Íàïðèìåð: 123,4
-     * ÌÁàéò èëè: 1,23 Êáàéò
-     *
-     * @param length
-     * @return
-     */
+    public static String toHexString(byte[] array) {
+        return DatatypeConverter.printHexBinary(array);
+    }
+
+    public static byte[] toByteArray(String s) {
+        return DatatypeConverter.parseHexBinary(s);
+    }
+
     public static String humanBytes(int length) {
         String[] prefixes = {"Áàéò", "ÊÁàéò", "ÌÁàéò", "ÃÁàéò"};
         float num = length;
@@ -65,19 +67,21 @@ public class Tools {
     }
 
     public static String getStringValue(Object o, String defValue) {
-            if (o == null) {
-                    return defValue;
-            } else {
-                    return String.valueOf(o);
-            }
+        if (o == null) {
+            return defValue;
+        } else {
+            return String.valueOf(o);
+        }
     }
-    
+
     public static String getStringValue(Object o, String defValue, int maxLength) {
-            String val = getStringValue(o, defValue);
-            if (val.length() > maxLength) val = val.substring(0, maxLength);
-            return val;
+        String val = getStringValue(o, defValue);
+        if (val.length() > maxLength) {
+            val = val.substring(0, maxLength);
+        }
+        return val;
     }
-        
+
     public static int parseInt(Object o, int defaultVal) {
         try {
             return Integer.parseInt(o.toString());
@@ -85,7 +89,7 @@ public class Tools {
             return defaultVal;
         }
     }
-    
+
     public static Integer parseInt(Object o, Integer defaultVal) {
         try {
             return Integer.parseInt(o.toString());
@@ -119,7 +123,7 @@ public class Tools {
             return defaultVal;
         }
     }
-    
+
     public static Double parseDouble(Object o, Double defaultVal) {
         try {
             return Double.parseDouble(o.toString());
@@ -333,7 +337,7 @@ public class Tools {
             return defaultVal;
         }
     }
-    
+
     public static Boolean parseBoolean(Object o, Boolean defaultVal) {
         try {
             return Boolean.parseBoolean(o.toString());
