@@ -9,8 +9,11 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.security.interfaces.RSAPrivateKey;
+import java.security.interfaces.RSAPublicKey;
 import java.util.HashMap;
 import java.util.Properties;
+import org.lobzik.tools.RSATools;
 import org.lobzik.tools.Tools;
 
 /**
@@ -32,7 +35,8 @@ public class BoxCommonData {
     public static final String REGISTER_SERVER_URL;
     public static final String SSID;
     public static final String WPA_PSK;
-    public static final String PUBLIC_KEY;
+    public static final RSAPublicKey PUBLIC_KEY;
+    public static final RSAPrivateKey PRIVATE_KEY;
     public static final String SERIAL_PORT;
     public static final String MODEM_INFO_PORT;
     
@@ -40,7 +44,7 @@ public class BoxCommonData {
     }
 
     static { //Init from files
-        HashMap<String, String> settingsMap = new HashMap();
+        HashMap<String, Object> settingsMap = new HashMap();
         try {
 
             Properties props = new Properties();
@@ -51,10 +55,11 @@ public class BoxCommonData {
             settingsMap.put("TUNNEL_SERVER_URL", props.getProperty("tunnel_server_url"));
             settingsMap.put("REGISTER_SERVER_URL", props.getProperty("register_server_url"));
             settingsMap.put("BOX_VERSION", props.getProperty("box_version"));
-            
+            String privateKeyFileName = props.getProperty("private_key_file");
             String publicKeyFileName = props.getProperty("public_key_file");
             settingsMap.put("PUBLIC_KEY_FILE", publicKeyFileName);
             settingsMap.put("PUBLIC_KEY", new String(Files.readAllBytes(Paths.get(publicKeyFileName)), "UTF-8"));
+
 
             String hostapdConfFileName = props.getProperty("hostapd_conf_file");
             settingsMap.put("HOSTAPD_CONFIG_FILE", hostapdConfFileName);
@@ -71,7 +76,13 @@ public class BoxCommonData {
                 props.load(new FileInputStream(boxIdFileName));
                 settingsMap.put("BOX_ID", props.getProperty("box_id"));
             }
-
+            
+            RSAPrivateKey privateKey =  RSATools.getPrivateKey(new String(Files.readAllBytes(Paths.get(privateKeyFileName)), "UTF-8"));
+            RSAPublicKey publicKey = RSATools.getPublicKey(privateKey);
+            
+            settingsMap.put("PRIVATE_KEY", privateKey);
+            settingsMap.put("PUBLIC_KEY", publicKey);
+                        
         } catch (Throwable t) {
             System.err.println("Fatal error while initializing!");
             t.printStackTrace();
@@ -80,18 +91,19 @@ public class BoxCommonData {
         }
 
         BOX_ID = Tools.parseInt(settingsMap.get("BOX_ID"), 0);
-        BOX_ID_FILE = settingsMap.get("BOX_ID_FILE");
-        BOX_VERSION = settingsMap.get("BOX_VERSION");
-        PUBLIC_KEY_FILE = settingsMap.get("PUBLIC_KEY_FILE");
-        PRIVATE_KEY_FILE = settingsMap.get("PRIVATE_KEY_FILE");
-        HOSTAPD_CONFIG_FILE = settingsMap.get("HOSTAPD_CONFIG_FILE");
-        TUNNEL_SERVER_URL = settingsMap.get("TUNNEL_SERVER_URL");
-        REGISTER_SERVER_URL = settingsMap.get("REGISTER_SERVER_URL");
-        SSID = settingsMap.get("SSID");
-        WPA_PSK = settingsMap.get("WPA_PSK");
-        PUBLIC_KEY = settingsMap.get("PUBLIC_KEY");
-        SERIAL_PORT = settingsMap.get("SERIAL_PORT");
-        MODEM_INFO_PORT = settingsMap.get("MODEM_INFO_PORT");
+        BOX_ID_FILE = (String)settingsMap.get("BOX_ID_FILE");
+        BOX_VERSION = (String)settingsMap.get("BOX_VERSION");
+        PUBLIC_KEY_FILE = (String)settingsMap.get("PUBLIC_KEY_FILE");
+        PRIVATE_KEY_FILE = (String)settingsMap.get("PRIVATE_KEY_FILE");
+        HOSTAPD_CONFIG_FILE = (String)settingsMap.get("HOSTAPD_CONFIG_FILE");
+        TUNNEL_SERVER_URL = (String)settingsMap.get("TUNNEL_SERVER_URL");
+        REGISTER_SERVER_URL = (String)settingsMap.get("REGISTER_SERVER_URL");
+        SSID = (String)settingsMap.get("SSID");
+        WPA_PSK = (String)settingsMap.get("WPA_PSK");
+        PUBLIC_KEY = (RSAPublicKey)settingsMap.get("PUBLIC_KEY");
+        PRIVATE_KEY = (RSAPrivateKey)settingsMap.get("PRIVATE_KEY");    
+        SERIAL_PORT = (String)settingsMap.get("SERIAL_PORT");
+        MODEM_INFO_PORT = (String)settingsMap.get("MODEM_INFO_PORT");
 
     }
 }
