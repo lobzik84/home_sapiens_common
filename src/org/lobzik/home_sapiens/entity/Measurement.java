@@ -129,11 +129,22 @@ public class Measurement {
                 break;
 
             case DOUBLE:
-                if (parameter.getCalibration() != null) {
-                    value = parameter.getCalibration() * doubleValue + ""; //TODO format according to pattern
+                if (doubleValue != null) {
+                    if (parameter.getCalibration() != null) {
+                        if (parameter.getPattern() != null) {
+                            value = String.format(parameter.getPattern(), parameter.getCalibration() * doubleValue);
+                        } else {
+                            value = parameter.getCalibration() * doubleValue + "";
+                        }
+                    } else if (parameter.getPattern() != null) {
+                        value = String.format(parameter.getPattern(), doubleValue);
+                    } else {
+                        value = doubleValue + "";
+                    }
                 } else {
-                    value = doubleValue + ""; //TODO format according to pattern
+                    value = "";
                 }
+
                 break;
 
             case STRING:
