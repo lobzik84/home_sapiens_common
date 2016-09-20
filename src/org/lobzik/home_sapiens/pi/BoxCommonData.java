@@ -7,6 +7,7 @@ package org.lobzik.home_sapiens.pi;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.math.BigInteger;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.security.interfaces.RSAPrivateKey;
@@ -39,7 +40,8 @@ public class BoxCommonData {
     public static final RSAPrivateKey PRIVATE_KEY;
     public static final String SERIAL_PORT;
     public static final String MODEM_INFO_PORT;
-    
+    public static final BigInteger RSA_E;
+            
     private BoxCommonData() {
     }
 
@@ -59,7 +61,8 @@ public class BoxCommonData {
             String publicKeyFileName = props.getProperty("public_key_file");
             settingsMap.put("PUBLIC_KEY_FILE", publicKeyFileName);
             settingsMap.put("PUBLIC_KEY", new String(Files.readAllBytes(Paths.get(publicKeyFileName)), "UTF-8"));
-
+            
+            settingsMap.put("RSA_E", new BigInteger(props.getProperty("rsa_e")));
 
             String hostapdConfFileName = props.getProperty("hostapd_conf_file");
             settingsMap.put("HOSTAPD_CONFIG_FILE", hostapdConfFileName);
@@ -104,6 +107,6 @@ public class BoxCommonData {
         PRIVATE_KEY = (RSAPrivateKey)settingsMap.get("PRIVATE_KEY");    
         SERIAL_PORT = (String)settingsMap.get("SERIAL_PORT");
         MODEM_INFO_PORT = (String)settingsMap.get("MODEM_INFO_PORT");
-
+        RSA_E = (BigInteger)settingsMap.get("RSA_E");
     }
 }
