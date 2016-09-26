@@ -29,13 +29,17 @@ public class Box {
             this.version = json.getString("version");
         }
         if (json.has("status")) {
-            this.status = json.getInt("status");
+            this.status = Status.values()[json.getInt("status")];
         }
         if (json.has("phone_num")) {
             this.phoneNum = json.getString("phone_num");
         }
         if (json.has("wpa_psk")) {
             this.wpaPSK = json.getString("wpa_psk");
+        }
+        
+        if (json.has("name")) {
+            this.wpaPSK = json.getString("name");
         }
 
     }
@@ -45,9 +49,10 @@ public class Box {
         this.ssid = (String) map.get("ssid");
         this.publicKey = (String) map.get("public_key");
         this.version = (String) map.get("version");
-        this.status = Tools.parseInt(map.get("status"), 0);
+        this.status = Status.values()[Tools.parseInt(map.get("status"), 0)];
         this.phoneNum = (String) map.get("phone_num");
         this.wpaPSK = (String) map.get("wpa_psk");
+        this.name = (String) map.get("name");
     }
 
     public HashMap<String, Object> getMap() {
@@ -56,9 +61,10 @@ public class Box {
         map.put("ssid", ssid);
         map.put("public_key", publicKey);
         map.put("version", version);
-        map.put("status", status);
+        map.put("status", status.ordinal());
         map.put("phone_num", phoneNum);
         map.put("wpa_psk", wpaPSK);
+        map.put("name", name);
         return map;
     }
 
@@ -75,8 +81,16 @@ public class Box {
     public String ssid = null;
     public String publicKey = null;
     public String version = null;
-    public int status = 0;
+    public Status status = Status.BANNED;
     public String phoneNum = null;
     public String wpaPSK = null;
-
+    public String name = null;
+    
+    
+    public enum Status
+    {   
+        BANNED,
+        REGISTERED,
+        ACTIVATED
+    }
 }
