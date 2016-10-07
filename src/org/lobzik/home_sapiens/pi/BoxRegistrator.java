@@ -12,6 +12,8 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.URL;
 import java.net.URLConnection;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import org.json.JSONObject;
 
 /**
@@ -34,7 +36,7 @@ public class BoxRegistrator {
 
             JSONObject boxJson = new JSONObject();
             boxJson.put("ssid", BoxCommonData.SSID);
-            boxJson.put("public_key", BoxCommonData.PUBLIC_KEY);
+            boxJson.put("public_key", new String(Files.readAllBytes(Paths.get(BoxCommonData.PUBLIC_KEY_FILE)), "UTF-8"));
             boxJson.put("version", BoxCommonData.BOX_VERSION);
             boxJson.put("wpa_psk", BoxCommonData.WPA_PSK);
 

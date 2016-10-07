@@ -60,7 +60,7 @@ public class BoxCommonData {
             String privateKeyFileName = props.getProperty("private_key_file");
             String publicKeyFileName = props.getProperty("public_key_file");
             settingsMap.put("PUBLIC_KEY_FILE", publicKeyFileName);
-            settingsMap.put("PUBLIC_KEY", new String(Files.readAllBytes(Paths.get(publicKeyFileName)), "UTF-8"));
+            //settingsMap.put("PUBLIC_KEY", new String(Files.readAllBytes(Paths.get(publicKeyFileName)), "UTF-8"));
             
             settingsMap.put("RSA_E", new BigInteger(props.getProperty("rsa_e")));
 
