@@ -18,6 +18,7 @@ public class Parameter {
     private String description = null;
     private String pattern = null;
     private String unit = null;
+    private String state = null;
     private Type type; 
     private Double calibration = null;
     
@@ -72,5 +73,13 @@ public class Parameter {
 
     public Parameter.Type getType() {
         return type;
+    }
+    
+    public void setState(String state) {
+        this.state = state;
+    }
+    
+    public String getState() {
+        return state;
     }
 }
