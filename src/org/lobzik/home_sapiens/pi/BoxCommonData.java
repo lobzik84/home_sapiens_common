@@ -42,6 +42,8 @@ public class BoxCommonData {
     public static final String MODEM_INFO_PORT;
     public static final BigInteger RSA_E;
             
+    public static final boolean TEST_MODE;
+    
     private BoxCommonData() {
     }
 
@@ -108,5 +110,6 @@ public class BoxCommonData {
         SERIAL_PORT = (String)settingsMap.get("SERIAL_PORT");
         MODEM_INFO_PORT = (String)settingsMap.get("MODEM_INFO_PORT");
         RSA_E = (BigInteger)settingsMap.get("RSA_E");
+        TEST_MODE = BOX_ID <= 0;
     }
 }

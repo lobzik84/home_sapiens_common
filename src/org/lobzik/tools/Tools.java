@@ -10,6 +10,7 @@ import java.awt.Image;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.text.*;
@@ -542,5 +543,31 @@ public class Tools {
             ex.printStackTrace();
         }
         return out_baos.toByteArray();
+    }
+
+    public static String sysExec(String command, File workDir) throws Exception {
+
+        LinkedList commandList = new LinkedList();
+        String[] arr = command.split(" ");
+        for (String c : arr) {
+            commandList.add(c);
+        }
+
+        return sysExec(commandList, workDir);
+    }
+
+    public static String sysExec(List<String> command, File workDir) throws Exception {
+
+        Runtime runtime = Runtime.getRuntime();
+        String[] env = {"aaa=bbb", "ccc=ddd"};
+
+        Process process = runtime.exec(command.toArray(new String[command.size()]), env, workDir);
+        StringBuilder output = new StringBuilder();
+        StreamGobbler errorGobbler = new StreamGobbler(process.getErrorStream(), output);
+        StreamGobbler outputGobbler = new StreamGobbler(process.getInputStream(), output);
+        errorGobbler.start();
+        outputGobbler.start();
+        process.waitFor();
+        return output.toString();
     }
 }

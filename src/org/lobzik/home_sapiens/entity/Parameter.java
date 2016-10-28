@@ -82,4 +82,8 @@ public class Parameter {
     public String getState() {
         return state;
     }
+    
+    public void setCalibration(double calibration) {
+        this.calibration = calibration;
+    }
 }
