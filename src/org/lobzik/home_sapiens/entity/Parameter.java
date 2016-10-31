@@ -18,9 +18,15 @@ public class Parameter {
     private String description = null;
     private String pattern = null;
     private String unit = null;
-    private String state = null;
-    private Type type; 
+    private State state = State.OK;
+    private final Type type; 
     private Double calibration = null;
+    
+    public enum State {
+        OK,
+        ALERT,
+        ALARM
+    }
     
     public enum Type
     {   
@@ -75,11 +81,11 @@ public class Parameter {
         return type;
     }
     
-    public void setState(String state) {
+    public void setState(State state) {
         this.state = state;
     }
     
-    public String getState() {
+    public State getState() {
         return state;
     }
     
