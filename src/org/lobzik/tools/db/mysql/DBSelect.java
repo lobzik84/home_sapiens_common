@@ -133,7 +133,6 @@ public class DBSelect
           case Types.NUMERIC:
           case Types.SMALLINT:
           case Types.DECIMAL:
-          case Types.DOUBLE:
             int scale = rsmd.getScale(i);
             if (scale > 0)
             {
