@@ -9,7 +9,6 @@ package org.lobzik.home_sapiens.entity;
  *
  * @author lobzik
  */
-
 public class Parameter {
 
     private int id = 0;
@@ -19,21 +18,20 @@ public class Parameter {
     private String pattern = null;
     private String unit = null;
     private State state = State.OK;
-    private final Type type; 
+    private final Type type;
     private Double calibration = null;
-    
+
     public enum State {
         OK,
         ALERT,
         ALARM
     }
-    
-    public enum Type
-    {   
-        DOUBLE,  
+
+    public enum Type {
+        DOUBLE,
         STRING,
         INTEGER,
-        BOOLEAN, 
+        BOOLEAN,
         INTEGER_COUNTER //incremental
     };
 
@@ -71,24 +69,27 @@ public class Parameter {
     public int getId() {
         return id;
     }
-    
-    public Double getCalibration() {
-        return calibration;
-    }
 
+    public Double getCalibration() {
+        if (calibration == null) {
+            return 1d;
+        } else {
+            return calibration;
+        }
+    }
 
     public Parameter.Type getType() {
         return type;
     }
-    
+
     public void setState(State state) {
         this.state = state;
     }
-    
+
     public State getState() {
         return state;
     }
-    
+
     public void setCalibration(double calibration) {
         this.calibration = calibration;
     }

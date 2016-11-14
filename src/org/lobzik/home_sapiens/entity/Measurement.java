@@ -130,13 +130,13 @@ public class Measurement {
 
             case DOUBLE:
                 if (doubleValue != null) {
-                    if (parameter.getCalibration() != null) {
+                    /*if (parameter.getCalibration() != null) {
                         if (parameter.getPattern() != null) {
                             value = String.format(parameter.getPattern(), parameter.getCalibration() * doubleValue);
                         } else {
                             value = parameter.getCalibration() * doubleValue + "";
                         }
-                    } else if (parameter.getPattern() != null) {
+                    } else*/ if (parameter.getPattern() != null) {
                         value = String.format(parameter.getPattern(), doubleValue);
                     } else {
                         value = doubleValue + "";
@@ -144,7 +144,6 @@ public class Measurement {
                 } else {
                     value = "";
                 }
-
                 break;
 
             case STRING:
