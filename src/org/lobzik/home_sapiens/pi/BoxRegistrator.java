@@ -5,6 +5,8 @@
  */
 package org.lobzik.home_sapiens.pi;
 
+import java.awt.Font;
+import java.awt.GraphicsEnvironment;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -28,7 +30,7 @@ public class BoxRegistrator {
     public static void main(String[] args) {
         // TODO code application logic here
         try {
-
+            /*
             if (BoxCommonData.BOX_ID > 0) {
                 System.err.println("Box registered already, " + BoxCommonData.BOX_ID_FILE + " exists. Exiting.");
                 return;
@@ -83,6 +85,14 @@ public class BoxRegistrator {
                 System.err.println(sb.toString());
             }
             //boxIdFile.
+             */
+
+            GraphicsEnvironment e = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            Font[] fonts = e.getAllFonts(); // Get the fonts
+            for (Font f : fonts) {
+                System.out.println(f.getFontName());
+            }
+
         } catch (Throwable e) {
             System.err.println("Error while registering device ");
             e.printStackTrace();
