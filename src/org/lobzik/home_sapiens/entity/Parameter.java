@@ -17,7 +17,7 @@ public class Parameter {
     private String description = null;
     private String pattern = null;
     private String unit = null;
-    private State state = State.OK;
+    private State state = null;
     private final Type type;
     private Double calibration = null;
 
