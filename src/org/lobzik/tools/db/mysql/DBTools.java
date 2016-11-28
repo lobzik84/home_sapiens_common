@@ -17,6 +17,15 @@ public class DBTools {
 	    registerConnection(conn);
 	    return conn;
 	}
+        
+        public static Connection openConnection(String resourceName, Context envCtx) throws Exception
+	{
+
+		BasicDataSource ds = (BasicDataSource)envCtx.lookup(resourceName);
+		Connection conn = ds.getConnection();
+	    registerConnection(conn);
+	    return conn;
+	}
 	
 	public static void closeConnection(Connection conn)
 	{
