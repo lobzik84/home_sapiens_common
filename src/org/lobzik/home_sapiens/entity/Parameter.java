@@ -20,6 +20,7 @@ public class Parameter {
     private State state = null;
     private final Type type;
     private Double calibration = null;
+    private Double correction = null;
 
     public enum State {
         OK,
@@ -35,7 +36,7 @@ public class Parameter {
         INTEGER_COUNTER //incremental
     };
 
-    public Parameter(int idP, String nameP, String aliasP, String descriptionP, String patternP, String unitP, Parameter.Type typeP, Double calibrationP) {
+    public Parameter(int idP, String nameP, String aliasP, String descriptionP, String patternP, String unitP, Parameter.Type typeP, Double calibrationP, Double correctionP) {
         id = idP;
         name = nameP;
         alias = aliasP;
@@ -44,6 +45,7 @@ public class Parameter {
         unit = unitP;
         type = typeP;
         calibration = calibrationP;
+        correction = correctionP;
     }
 
     public String getName() {
@@ -78,6 +80,14 @@ public class Parameter {
         }
     }
 
+    public Double getCorrection() {
+        if (correction == null) {
+            return 0d;
+        } else {
+            return correction;
+        }
+    }    
+    
     public Parameter.Type getType() {
         return type;
     }
@@ -92,5 +102,9 @@ public class Parameter {
 
     public void setCalibration(double calibration) {
         this.calibration = calibration;
+    }
+
+    public void setCorrection(double correction) {
+        this.correction = correction;
     }
 }
