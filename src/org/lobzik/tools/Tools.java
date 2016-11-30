@@ -9,10 +9,13 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.net.URL;
 import java.text.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -86,6 +89,14 @@ public class Tools {
     public static int parseInt(Object o, int defaultVal) {
         try {
             return Integer.parseInt(o.toString());
+        } catch (Exception e) {
+            return defaultVal;
+        }
+    }
+
+    public static long parseLong(Object o, long defaultVal) {
+        try {
+            return Long.parseLong(o.toString());
         } catch (Exception e) {
             return defaultVal;
         }
@@ -569,5 +580,22 @@ public class Tools {
         outputGobbler.start();
         process.waitFor();
         return output.toString();
+    }
+
+    public static String getFromUrl(URL url) throws Exception {
+
+        BufferedReader br;
+        String line;
+        StringBuilder sb = new StringBuilder();
+        
+        try (InputStream is = url.openStream()) {
+
+            br = new BufferedReader(new InputStreamReader(is));
+
+            while ((line = br.readLine()) != null) {
+                sb.append(line);
+            }
+        }
+        return sb.toString();
     }
 }
