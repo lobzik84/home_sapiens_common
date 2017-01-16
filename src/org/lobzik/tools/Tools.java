@@ -57,7 +57,7 @@ public class Tools {
     }
 
     public static String humanBytes(int length) {
-        String[] prefixes = {"Áàéò", "ÊÁàéò", "ÌÁàéò", "ÃÁàéò"};
+        String[] prefixes = {"Байт", "КБайт", "МБайт", "Гбайт"};
         float num = length;
         final int step = 1024;
         for (int i = 0; i < prefixes.length; i++) {
